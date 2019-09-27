@@ -1,0 +1,27 @@
+.side_bar{
+    grid-area: side_bar;
+    background-color: #07B568;
+}
+
+.side_bar ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.side_bar ul li a{
+    color: #ffffff;
+    font-size: 18px;
+    display: block;
+    padding: 20px 0 0 20px;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.side_bar ul li a:hover{
+    color: #F5B000;
+}
+
+.side_bar ul li a.active{
+    color: #F5B000;
+}
