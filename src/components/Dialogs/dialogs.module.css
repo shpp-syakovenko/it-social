@@ -23,3 +23,40 @@
 .message{
     padding: 5px;
 }
+
+.message::before{
+    content: '';
+    background-color: #F5B000;
+    display: inline-block;
+    border-radius: 50%;
+    margin-right: 10px;
+    height: 10px;
+    width: 10px;
+}
+
+.formAddMessage{
+    border: 1px solid #ccc;
+    margin-top: 15px;
+}
+
+.formAddMessage textarea{
+    width: 100%;
+    padding: 15px;
+    outline: none;
+    border: none;
+    box-sizing: border-box;
+}
+
+.formAddMessage button{
+    margin: 15px 0;
+    float: right;
+    outline: none;
+    border: 1px solid #ccc;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 5px 20px;
+    color: #777;
+}
+
+

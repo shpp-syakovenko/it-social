@@ -7,13 +7,13 @@ import ListPost from "./listPost/ListPost.js";
 class Profile extends Component{
 
     render(){
-        const {profile, addPost, updatePostText} = this.props;
+        const {profile, dispatch} = this.props;
 
         return(
             <div>
                 <HeaderContent/>
                 <LogoName/>
-                <AddPost addPost={addPost} updatePostText={updatePostText} postText={profile.postText}/>
+                <AddPost dispatch={dispatch} postText={profile.postText}/>
                 <div className='clear'/>
                 <ListPost postData={profile.postData} />
             </div>

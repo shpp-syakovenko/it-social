@@ -11,7 +11,7 @@ import Music from "./Music/Music.js";
 import Settings from "./Settings/Settings.js";
 
 
-const App = ({state, addPost, updatePostText}) => {
+const App = ({state, dispatch}) => {
 
   return (
       <BrowserRouter>
@@ -19,8 +19,8 @@ const App = ({state, addPost, updatePostText}) => {
               <Header/>
               <SideBar/>
               <div className="app-wrapper-content">
-                  <Route path='/profile' render={ () => <Profile profile={state.profile}  addPost={addPost} updatePostText={updatePostText} />} />
-                  <Route path='/dialogs' render={ () => <Dialogs dialogs={state.dialogs} />} />
+                  <Route path='/profile' render={ () => <Profile profile={state.profile}  dispatch={dispatch} />} />
+                  <Route path='/dialogs' render={ () => <Dialogs dialogs={state.dialogs}  dispatch={dispatch}/>} />
                   <Route path='/news' component={News} />
                   <Route path='/music' component={Music} />
                   <Route path='/settings' component={Settings} />
@@ -28,7 +28,6 @@ const App = ({state, addPost, updatePostText}) => {
               <Footer/>
           </div>
       </BrowserRouter>
-
     );
 };
 
