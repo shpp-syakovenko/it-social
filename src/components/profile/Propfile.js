@@ -1,24 +1,17 @@
-import React, {Component} from 'react';
+import React from 'react';
 import HeaderContent from "./HeaderContent/HeaderContent.js";
 import LogoName from "./LogoName/LogoName.js";
-import AddPost from "./AddPost/AddPost.js";
-import ListPost from "./listPost/ListPost.js";
+import AddPostContainer from "./AddPost/AddPostContainer";
 
-class Profile extends Component{
-
-    render(){
-        const {profile, dispatch} = this.props;
-
+const Profile = () =>{
         return(
             <div>
                 <HeaderContent/>
                 <LogoName/>
-                <AddPost dispatch={dispatch} postText={profile.postText}/>
-                <div className='clear'/>
-                <ListPost postData={profile.postData} />
+                <AddPostContainer />
             </div>
         )
-    }
-}
+
+};
 
 export default Profile;

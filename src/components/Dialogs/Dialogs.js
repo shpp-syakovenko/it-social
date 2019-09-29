@@ -2,23 +2,9 @@ import React from 'react'
 import s from './dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {addMessageActionCreate, updateMessageActionCreate} from "../../redux/state";
 
 
-const Dialogs = ({dialogs, dispatch}) => {
-
-
-
-    const onChangeText = (event) => {
-        let text = event.target.value;
-        dispatch(updateMessageActionCreate(text));
-    };
-    const addMessageElement = (event) => {
-        event.preventDefault();
-        dispatch(addMessageActionCreate());
-
-    };
-
+const Dialogs = ({dialogs, onChangeText, addMessageElement}) => {
 
     return (
         <div className={s.dialogs}>
@@ -37,7 +23,7 @@ const Dialogs = ({dialogs, dispatch}) => {
                 }
                 <div className={s.formAddMessage}>
                     <div className={s.messageText}>
-                        <textarea onChange={onChangeText} placeholder='Enter text...' value={dialogs.messageText}/>
+                        <textarea onChange={(event) => onChangeText(event)} placeholder='Enter text...' value={dialogs.messageText}/>
                     </div>
                     <div className={s.messageAdd}>
                         <button onClick={(event) => addMessageElement(event)}>

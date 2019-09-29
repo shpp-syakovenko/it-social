@@ -2,10 +2,10 @@ import React from 'react';
 import s from "../../profile.module.css";
 
 
-const Post = (props) => {
+const Post = ({message, like}) => {
   return(
       <div className={s.itemPost}>
-          {props.message}<span> like: {props.like}</span>
+          {message}<span> like: {like}</span>
       </div>
   )
 };
