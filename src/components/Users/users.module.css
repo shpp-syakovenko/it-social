@@ -1,0 +1,74 @@
+img{
+    max-width: 100%;
+}
+
+.users{
+    color: #74737A;
+}
+
+.user{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.avatar{
+    width: 150px;
+    text-align: center;
+    margin-right: 15px;
+}
+
+.avatar button {
+    background-color: #07B568;
+    color: #E7EDEA;
+    width: 80%;
+    padding: 5px 10px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+.description{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    border: 2px solid #74737A;
+    border-radius: 10px;
+    padding: 20px;
+    font-size: 26px;
+}
+.description .leftDesc{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+.description .status{
+    font-size: 20px;
+    font-style: italic;
+}
+
+
+.description .rightDesc{
+    display: flex;
+    flex-direction: column;
+}
+.description .rightDesc .country{
+    margin-bottom: 20px;
+}
+.pagination{
+   padding: 20px;
+    text-align: center;
+}
+.pagination span{
+    margin-right: 10px;
+    padding: 10px;
+    background-color: #cccccc;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.pagination .activePage{
+    font-weight: bold;
+    background-color: gold;
+}
+
