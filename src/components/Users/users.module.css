@@ -45,6 +45,9 @@ img{
 .description .status{
     font-size: 20px;
     font-style: italic;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    max-width: 500px;
 }
 
 
@@ -57,7 +60,7 @@ img{
 }
 .pagination{
    padding: 20px;
-    text-align: center;
+   text-align: center;
 }
 .pagination span{
     margin-right: 10px;
