@@ -4,6 +4,8 @@ import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 
 
+
+
 const Dialogs = ({dialogs, onChangeText, addMessageElement}) => {
 
     return (

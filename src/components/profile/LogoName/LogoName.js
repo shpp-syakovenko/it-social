@@ -1,14 +1,34 @@
 import React from 'react'
-import content from "../profile.module.css";
-import logoContent from "../../../assets/images/logo-content.jpg";
+import s from "../profile.module.css";
+import avatar from '../../../assets/images/avatar.jpeg'
+import Preloader from "../../elements/Preloader/Preloader";
 
 
-const LogoName = () => {
+const LogoName = ({profile}) => {
+    if(!profile){
+        return <Preloader/>
+    }
     return(
-        <div className={content.logo_post}>
-            <img src={logoContent} alt="images"/>
-            <h2>Sergey Yakovenko</h2>
+        <div>
+            <div className={s.logo_post}>
+                <img src={profile.photos.large ? profile.photos.large : avatar} alt="images"/>
+                <div className={s.desc}>
+                    <h2>{profile.fullName}</h2>
+                    <p>{profile.aboutMe}</p>
+                </div>
+            </div>
+
+            <div className={s.social}>
+                <ul>
+                    <li><a href={profile.contacts.facebook}>facebook</a></li>
+                    <li><a href={profile.contacts.vk}>VK</a></li>
+                    <li><a href={profile.contacts.twitter}>twitter</a></li>
+                    <li><a href={profile.contacts.instagram}>instagram</a></li>
+                    <li><a href={profile.contacts.website}>website</a></li>
+                </ul>
+            </div>
         </div>
+
     )
 };
 

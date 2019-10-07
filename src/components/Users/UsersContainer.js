@@ -1,42 +1,25 @@
 import React from 'react';
 import {connect} from "react-redux";
 import Users from "./Users";
-import {
-    followActionCreate,
-    setCurrentPageActionCreate, setTotalUserCountActionCreate,
-    setUsersActionCreate, toggleLoaderActionCreate,
-    unfollowActionCreate
-} from "../../redux/usersReducer";
-import * as axios from "axios";
+import {follow, getUsers, toggleFollowingProgress, unfollow} from "../../redux/usersReducer";
 import Preloader from "../elements/Preloader/Preloader";
 
 class UsersContainer extends React.Component{
 
     componentDidMount() {
-        const {setUsers,currentPage,pageSize,setTotalUserCount, toggleLoader} = this.props;
-        toggleLoader(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${pageSize}`)
-            .then(response => {
-                setTotalUserCount(response.data.totalCount);
-                setUsers(response.data.items);
-                toggleLoader(false);
-            });
+        const {currentPage,pageSize, getUsers} = this.props;
+        getUsers(currentPage, pageSize);
     }
 
     onPageChange = (currentP) => {
-        const{setCurrentPage, setUsers, pageSize, toggleLoader } = this.props;
-        toggleLoader(true);
-        setCurrentPage(currentP);
-        setUsers([]);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentP}&count=${pageSize}`)
-            .then(response => {
-                setUsers(response.data.items);
-                toggleLoader(false);
-            });
+
+        const {pageSize, getUsers} = this.props;
+        getUsers(currentP, pageSize);
+
     };
 
     render(){
-        const {follow, unfollow, users, pageSize, totalUsersCount, currentPage, isFetching} = this.props;
+        const {follow, unfollow, users, pageSize, totalUsersCount, currentPage, isFetching, toggleFollowingProgress, followingProgress} = this.props;
         let pageCount = Math.ceil(totalUsersCount / pageSize);
         let pages = [];
 
@@ -46,7 +29,6 @@ class UsersContainer extends React.Component{
 
         return (
             <>
-
                 {isFetching ? <Preloader/> : null }
 
                 <Users pages={pages}
@@ -55,23 +37,27 @@ class UsersContainer extends React.Component{
                        users={users}
                        unfollow={unfollow}
                        follow={follow}
+                       toggleFollowingProgress={toggleFollowingProgress}
+                       followingProgress={followingProgress}
                 />
-             </>
-
+            </>
         )
     }
 }
 
-
+// функция которая возвращает обьект пропсов которые будут переданы компоненту UsersContainer
 const mapStateToProps = (state) => {
     return {
         users: state.usersPage.users,
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching
+        isFetching: state.usersPage.isFetching,
+        followingProgress: state.usersPage.followingProgress
     }
 };
+
+/* Развернутая запись функции которые передаем connect
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -95,5 +81,10 @@ const mapDispatchToProps = (dispatch) => {
         }
     }
 };
+*/
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer)
+
+export default connect(mapStateToProps, {
+    // Connect сам подставляет функции с обьекта в dispatch
+    follow, unfollow, toggleFollowingProgress, getUsers
+})(UsersContainer)

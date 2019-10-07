@@ -1,11 +1,34 @@
+
 .logo_post img{
     width: 200px;
     margin-right: 20px;
 }
 
-
 .logo_post{
     display: flex;
+}
+
+.desc p{
+    font-size: 18px;
+    font-style: italic;
+}
+.social ul{
+    margin: 0;
+    padding: 20px 0;
+    list-style: none;
+}
+.social ul li{
+    padding-bottom: 10px;
+}
+
+.social ul li a{
+    color: blue;
+    text-decoration: none;
+    font-size: 24px;
+    transition: all 0.5s;
+}
+.social ul li a:hover{
+    color: red;
 }
 
 .post h3{

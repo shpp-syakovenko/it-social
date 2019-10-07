@@ -4,8 +4,8 @@ import {addPostActionCreate, updatePostTextActionCreate} from "../../../redux/pr
 
 const mapStateToProps = (state) => {
     return {
-        postText: state.profile.postText,
-        postData: state.profile.postData
+        postText: state.profilePage.postText,
+        postData: state.profilePage.postData
     }
 };
 

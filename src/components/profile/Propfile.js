@@ -3,11 +3,13 @@ import HeaderContent from "./HeaderContent/HeaderContent.js";
 import LogoName from "./LogoName/LogoName.js";
 import AddPostContainer from "./AddPost/AddPostContainer";
 
-const Profile = () =>{
+
+const Profile = ({profile}) =>{
+
         return(
             <div>
                 <HeaderContent/>
-                <LogoName/>
+                <LogoName profile={profile}/>
                 <AddPostContainer />
             </div>
         )
