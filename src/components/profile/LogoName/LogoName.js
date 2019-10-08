@@ -2,6 +2,7 @@ import React from 'react'
 import s from "../profile.module.css";
 import avatar from '../../../assets/images/avatar.jpeg'
 import Preloader from "../../elements/Preloader/Preloader";
+import ProfileStatus from "./ProfileStatus";
 
 
 const LogoName = ({profile}) => {
@@ -15,6 +16,7 @@ const LogoName = ({profile}) => {
                 <div className={s.desc}>
                     <h2>{profile.fullName}</h2>
                     <p>{profile.aboutMe}</p>
+                    <ProfileStatus />
                 </div>
             </div>
 
