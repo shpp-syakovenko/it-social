@@ -8,7 +8,7 @@ class ProfileStatus extends React.Component {
 
         this.state = {
             isStatus: false,
-            statusText: "Enter status"
+            statusText: this.props.status || "Not status"
         }
     }
 
@@ -27,7 +27,8 @@ class ProfileStatus extends React.Component {
     deActiveStatus = () => {
         this.setState({
             isStatus: false
-        })
+        });
+        this.props.updateStatus(this.state.statusText);
     };
 
     focusStatus = (event) => {
@@ -35,17 +36,25 @@ class ProfileStatus extends React.Component {
         event.target.select();
     };
 
+    componentDidUpdate(prevProps, prevState) {
+        if(prevProps.status !== this.props.status){
+            this.setState({
+                statusText: this.props.status
+            })
+        }
+    }
+
     render() {
         return (
             <div className={s.profileStatus}>
                 {
                     this.state.isStatus ?
                         <div className="inputStatus">
-                            <input onBlur={this.deActiveStatus} onFocus={this.focusStatus} type="text" onChange={this.changeStatus} value={this.state.statusText}/>
+                            <input autoFocus={true} onBlur={this.deActiveStatus} onFocus={this.focusStatus} type="text" onChange={this.changeStatus} value={this.state.statusText || ""}/>
                         </div>
                         :
                         <div onDoubleClick={this.activeStatus}  className="textStatus">
-                            {this.state.statusText}
+                            {this.props.status || "Not status"}
                         </div>
                 }
 

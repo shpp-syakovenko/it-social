@@ -15,7 +15,7 @@ let startState = {
         {id: 2, urlPhoto: 'https://pbs.twimg.com/profile_images/552426642107166720/iaEkxjZG.jpeg', fullName: 'Roma Zagorskiy', followed: true, status: 'I want eat today', location: {country: 'Greece', city: 'Athens'}},
         {id: 3, urlPhoto: 'https://pbs.twimg.com/profile_images/552426642107166720/iaEkxjZG.jpeg', fullName: 'Igor Bagnuk', followed: false, status: 'I want sleep today', location: {country: 'Latvia', city: 'Riga'}}*/
     ],
-    pageSize: 40,
+    pageSize: 50,
     totalUsersCount: 1,
     currentPage: 1,
     isFetching: false,

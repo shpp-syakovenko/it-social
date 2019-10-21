@@ -4,12 +4,12 @@ import LogoName from "./LogoName/LogoName.js";
 import AddPostContainer from "./AddPost/AddPostContainer";
 
 
-const Profile = ({profile}) =>{
+const Profile = ({profile, status, updateStatus}) =>{
 
         return(
             <div>
                 <HeaderContent/>
-                <LogoName profile={profile}/>
+                <LogoName profile={profile} status={status} updateStatus={updateStatus}/>
                 <AddPostContainer />
             </div>
         )

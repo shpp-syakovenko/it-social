@@ -5,10 +5,11 @@ import Preloader from "../../elements/Preloader/Preloader";
 import ProfileStatus from "./ProfileStatus";
 
 
-const LogoName = ({profile}) => {
+const LogoName = ({profile, status, updateStatus}) => {
     if(!profile){
         return <Preloader/>
     }
+
     return(
         <div>
             <div className={s.logo_post}>
@@ -16,7 +17,7 @@ const LogoName = ({profile}) => {
                 <div className={s.desc}>
                     <h2>{profile.fullName}</h2>
                     <p>{profile.aboutMe}</p>
-                    <ProfileStatus />
+                    <ProfileStatus status={status} updateStatus={updateStatus} />
                 </div>
             </div>
 
