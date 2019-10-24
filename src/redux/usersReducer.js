@@ -76,7 +76,8 @@ export const setTotalUserCount = (totalCount) =>({type: TOTAL_USERS_COUNT, total
 export const toggleLoader = (isFetching) =>({type: TOGGLE_LOADER, isFetching});
 export const toggleFollowingProgress = (isFetching, userId) =>({type: FOLLOWING_PROGRESS, isFetching, userId});
 
-export const getUsers = (currentPage, pageSize) => {
+// Выбрать всех юзеров с текущей страницы
+export const getUsersCurrentPage = (currentPage, pageSize) => {
     return (dispatch) => {
         dispatch(toggleLoader(true));
 

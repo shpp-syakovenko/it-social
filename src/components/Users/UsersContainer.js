@@ -1,25 +1,32 @@
 import React from 'react';
 import {connect} from "react-redux";
 import Users from "./Users";
-import {follow, getUsers, toggleFollowingProgress, unfollow} from "../../redux/usersReducer";
+import {follow, getUsersCurrentPage, unfollow} from "../../redux/usersReducer";
 import Preloader from "../elements/Preloader/Preloader";
+import {
+    getCurrentPage, getFollowingProgress,
+    getIsFetching,
+    getPageSize,
+    getTotalUsersCount,
+    getUsers
+} from "../../redux/usersSelectors";
 
 class UsersContainer extends React.Component{
 
     componentDidMount() {
-        const {currentPage,pageSize, getUsers} = this.props;
-        getUsers(currentPage, pageSize);
+        const {currentPage,pageSize, getUsersCurrentPage} = this.props;
+        getUsersCurrentPage(currentPage, pageSize);
     }
 
     onPageChange = (currentP) => {
 
-        const {pageSize, getUsers} = this.props;
-        getUsers(currentP, pageSize);
+        const {pageSize, getUsersCurrentPage} = this.props;
+        getUsersCurrentPage(currentP, pageSize);
 
     };
 
     render(){
-        const {follow, unfollow, users, pageSize, totalUsersCount, currentPage, isFetching, toggleFollowingProgress, followingProgress} = this.props;
+        const {follow, unfollow, users, pageSize, totalUsersCount, currentPage, isFetching, followingProgress} = this.props;
         let pageCount = Math.ceil(totalUsersCount / pageSize);
         let pages = [];
 
@@ -37,7 +44,6 @@ class UsersContainer extends React.Component{
                        users={users}
                        unfollow={unfollow}
                        follow={follow}
-                       toggleFollowingProgress={toggleFollowingProgress}
                        followingProgress={followingProgress}
                 />
             </>
@@ -46,7 +52,7 @@ class UsersContainer extends React.Component{
 }
 
 // функция которая возвращает обьект пропсов которые будут переданы компоненту UsersContainer
-const mapStateToProps = (state) => {
+/*const mapStateToProps = (state) => {
     return {
         users: state.usersPage.users,
         pageSize: state.usersPage.pageSize,
@@ -55,7 +61,7 @@ const mapStateToProps = (state) => {
         isFetching: state.usersPage.isFetching,
         followingProgress: state.usersPage.followingProgress
     }
-};
+};*/
 
 /* Развернутая запись функции которые передаем connect
 
@@ -83,8 +89,19 @@ const mapDispatchToProps = (dispatch) => {
 };
 */
 
+const mapStateToProps = (state) => {
+    return {
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        followingProgress: getFollowingProgress(state)
+    }
+};
+
 
 export default connect(mapStateToProps, {
     // Connect сам подставляет функции с обьекта в dispatch
-    follow, unfollow, toggleFollowingProgress, getUsers
+    follow, unfollow, getUsersCurrentPage
 })(UsersContainer)

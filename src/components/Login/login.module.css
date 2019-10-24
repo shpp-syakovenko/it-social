@@ -1,0 +1,7 @@
+.formError{
+    padding: 5px;
+    border: 1px solid red;
+    color: red;
+    display: inline-block;
+    margin: 5px 0;
+}

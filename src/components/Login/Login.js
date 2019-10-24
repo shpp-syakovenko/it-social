@@ -6,6 +6,7 @@ import {maxLengthCreator, required} from "../../utils/validators/validator";
 import connect from "react-redux/es/connect/connect";
 import {login, logout} from "../../redux/authReducer";
 import {Redirect} from "react-router-dom";
+import style from './login.module.css';
 
 const maxLength = maxLengthCreator(20);
 
@@ -27,7 +28,7 @@ const Login = ({login, isAuth}) => {
     );
 };
 
-const LoginForm = ({handleSubmit}) => {
+const LoginForm = ({handleSubmit, error}) => {
     return(
       <form onSubmit={handleSubmit}>
           <div>
@@ -39,6 +40,12 @@ const LoginForm = ({handleSubmit}) => {
           <div>
             <Field component={Input} type={"checkbox"} name={"rememberMe"} /> remember me
           </div>
+
+            {error ? <div className={style.formError}>
+                      {error}
+                     </div>
+                   : ""}
+
           <div>
               <button>Send</button>
           </div>

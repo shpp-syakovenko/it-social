@@ -1,4 +1,5 @@
-import {authAPI, usersAPI} from "../api/api";
+import {authAPI} from "../api/api";
+import {stopSubmit} from "redux-form";
 
 const SET_USER_DATA = 'SET_USER_DATA';
 
@@ -23,9 +24,10 @@ const authReducer = (state = startState, action) => {
 
 export const setAuthUserData = (userId, email, login, isAuth) => ({type: SET_USER_DATA, payload: {id: userId, email, login, isAuth}});
 
+// Проверяеи зарегистрирован ли пользователь. Если информация в куках
 export const getAuthUserData = () => {
     return (dispatch) => {
-        usersAPI.authMe()
+      return authAPI.authMe()
             .then(response => {
                 const{id, email, login} = response.data.data;
                 if(response.data.resultCode === 0){
@@ -35,17 +37,21 @@ export const getAuthUserData = () => {
     }
 };
 
+// Логинемся и заносим информацию в куки
 export const login = (email, password, rememberMe) => {
     return (dispatch) => {
         authAPI.login(email, password, rememberMe)
           .then(response => {
               if(response.data.resultCode === 0){
                   dispatch(getAuthUserData());
+              }else {
+                dispatch(stopSubmit("login",{_error: "Вы ввели неверный пароль или email"}));
               }
           });
     }
 };
 
+// Удаляем куку про авторизацию.
 export const logout = () => {
     return (dispatch) => {
         authAPI.logout()
