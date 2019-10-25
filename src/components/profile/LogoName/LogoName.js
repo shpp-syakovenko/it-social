@@ -2,10 +2,12 @@ import React from 'react'
 import s from "../profile.module.css";
 import avatar from '../../../assets/images/avatar.jpeg'
 import Preloader from "../../elements/Preloader/Preloader";
-import ProfileStatus from "./ProfileStatus";
+import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 
 
 const LogoName = ({profile, status, updateStatus}) => {
+
+
     if(!profile){
         return <Preloader/>
     }
@@ -17,7 +19,7 @@ const LogoName = ({profile, status, updateStatus}) => {
                 <div className={s.desc}>
                     <h2>{profile.fullName}</h2>
                     <p>{profile.aboutMe}</p>
-                    <ProfileStatus status={status} updateStatus={updateStatus} />
+                    <ProfileStatusWithHooks status={status} updateStatus={updateStatus} />
                 </div>
             </div>
 

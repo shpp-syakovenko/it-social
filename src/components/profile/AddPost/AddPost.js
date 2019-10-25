@@ -9,6 +9,7 @@ import {Textarea} from "../../elements/FormControls/FormControls";
 const maxLength = maxLengthCreator(20);
 
 const AddPost = ({addPostElement, postData}) => {
+
   const onSubmitForm = (formData) => {
     addPostElement(formData.postText);
   };

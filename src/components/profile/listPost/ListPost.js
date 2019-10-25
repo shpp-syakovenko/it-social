@@ -8,7 +8,9 @@ const ListPost = ({postData}) => {
     return(
         <div className={s.listPost}>
             {
-                postData.map( post => (
+                [...postData] // Делаем копию массива и изменяем уже его (reverse())
+                  .reverse()
+                  .map( post => (
                     <Post key={post.id} message={post.message} like={post.like} />
                 ))
             }
