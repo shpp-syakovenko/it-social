@@ -1,0 +1,30 @@
+.pagination{
+    padding: 20px;
+    text-align: center;
+}
+.pagination span{
+    margin-right: 10px;
+    padding: 10px;
+    background-color: #cccccc;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.pagination .activePage, .pagination button:hover{
+    font-weight: bold;
+    background-color: gold;
+}
+
+.pagination button{
+    margin: 0 15px;
+    padding: 10px 15px;
+    background-color: #cccccc;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: all 0.5s;
+    width: 70px;
+}
+

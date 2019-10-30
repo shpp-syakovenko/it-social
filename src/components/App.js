@@ -3,18 +3,21 @@ import '../assets/App.css';
 import SideBar from './SideBar/SideBar.js';
 import Footer from './Footer/Footer.js';
 import News from './News/News.js';
-import {BrowserRouter, Route, withRouter} from "react-router-dom";
+import {Route, withRouter} from "react-router-dom";
 import Music from "./Music/Music.js";
 import Settings from "./Settings/Settings.js";
-import DialogsContainer from "./Dialogs/DialogsContainer";
 import UsersContainer from "./Users/UsersContainer";
-import ProfileContainer from "./profile/PropfileContainer";
+
 import HeaderContainer from "./Header/HeaderContainer";
 import Login from "./Login/Login";
 import connect from "react-redux/es/connect/connect";
 import {initialize} from "../redux/appReducer";
 import Preloader from "./elements/Preloader/Preloader";
-
+import {withSuspense} from "../hoc/WithSuspense";
+//import DialogsContainer from "./Dialogs/DialogsContainer";
+//import ProfileContainer from "./profile/PropfileContainer";
+const DialogsContainer = React.lazy(() => import("./Dialogs/DialogsContainer"));
+const ProfileContainer = React.lazy(() => import("./profile/PropfileContainer"));
 
 class App extends Component {
   componentDidMount() {
@@ -27,13 +30,12 @@ class App extends Component {
       return <Preloader/>
     }
     return (
-      <BrowserRouter>
         <div className='app-wrapper'>
           <HeaderContainer/>
           <SideBar/>
           <div className="app-wrapper-content">
-            <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
-            <Route path='/dialogs' render={() => <DialogsContainer/>}/>
+            <Route path='/profile/:userId?' render={withSuspense(ProfileContainer)}/>
+            <Route path='/dialogs' render={withSuspense(DialogsContainer)}/>
             <Route path='/news' component={News}/>
             <Route path='/music' component={Music}/>
             <Route path='/settings' component={Settings}/>
@@ -42,7 +44,6 @@ class App extends Component {
           </div>
           <Footer/>
         </div>
-      </BrowserRouter>
     );
   }
 }

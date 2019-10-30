@@ -58,20 +58,34 @@ img{
 .description .rightDesc .country{
     margin-bottom: 20px;
 }
-.pagination{
-   padding: 20px;
-   text-align: center;
-}
-.pagination span{
-    margin-right: 10px;
-    padding: 10px;
-    background-color: #cccccc;
-    cursor: pointer;
-    transition: all 0.3s;
+.pagin{
+    list-style: none;
+    text-align: center;
 }
 
-.pagination .activePage{
-    font-weight: bold;
-    background-color: gold;
+.pagin li{
+    display: inline-block;
+    margin: 0 7px;
+    padding: 7px 15px;
+    background-color: transparent;
+    border: 1px solid #cccccc;
+    color: #777777;
+    cursor: pointer;
 }
+.pagin a{
+    text-decoration: none;
+    color: #07B568;
+    font-size: 18px;
+    transition: all 0.5s;
+}
+.pagin li:hover a{
+    color: #F5B000;
+    font-weight: bold;
+}
+
+.active a{
+    color: #F5B000;
+    font-weight: bold;
+}
+
 

@@ -27,18 +27,14 @@ class UsersContainer extends React.Component{
 
     render(){
         const {follow, unfollow, users, pageSize, totalUsersCount, currentPage, isFetching, followingProgress} = this.props;
-        let pageCount = Math.ceil(totalUsersCount / pageSize);
-        let pages = [];
 
-        for(let i = 1; i <= pageCount; i++){
-            pages.push(i);
-        }
 
         return (
             <>
                 {isFetching ? <Preloader/> : null }
 
-                <Users pages={pages}
+                <Users pageSize={pageSize}
+                       totalUsersCount={totalUsersCount}
                        onPageChange={this.onPageChange}
                        currentPage={currentPage}
                        users={users}

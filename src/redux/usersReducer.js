@@ -1,4 +1,5 @@
 import {usersAPI} from "../api/api";
+import {updateObjectInArray} from "../utils/objectHelper";
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -15,7 +16,7 @@ let startState = {
         {id: 2, urlPhoto: 'https://pbs.twimg.com/profile_images/552426642107166720/iaEkxjZG.jpeg', fullName: 'Roma Zagorskiy', followed: true, status: 'I want eat today', location: {country: 'Greece', city: 'Athens'}},
         {id: 3, urlPhoto: 'https://pbs.twimg.com/profile_images/552426642107166720/iaEkxjZG.jpeg', fullName: 'Igor Bagnuk', followed: false, status: 'I want sleep today', location: {country: 'Latvia', city: 'Riga'}}*/
     ],
-    pageSize: 50,
+    pageSize: 20,
     totalUsersCount: 1,
     currentPage: 1,
     isFetching: false,
@@ -29,23 +30,13 @@ const usersReducer = (state = startState, action) => {
         case FOLLOW:
             return  {
                 ...state,
-                users: state.users.map( u => {
-                    if(u.id === action.userId){
-                        return { ...u, followed: true }
-                    }
-                    return u;
-                })
+                users: updateObjectInArray(state.users, action.userId, 'id', {followed: true})
             };
 
         case UNFOLLOW:
             return {
                 ...state,
-                users: state.users.map(u => {
-                    if(u.id === action.userId){
-                        return {...u, followed: false}
-                    }
-                    return u;
-                })
+                users: updateObjectInArray(state.users, action.userId, 'id', {followed: false})
             };
         case SET_USERS:
             return {...state, users: [...action.users]};
@@ -78,41 +69,39 @@ export const toggleFollowingProgress = (isFetching, userId) =>({type: FOLLOWING_
 
 // Выбрать всех юзеров с текущей страницы
 export const getUsersCurrentPage = (currentPage, pageSize) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(toggleLoader(true));
 
-        usersAPI.getUsers(currentPage, pageSize).then(data => {
-            dispatch(setCurrentPage(currentPage));
-            dispatch(setTotalUserCount(data.totalCount));
-            dispatch(setUsers(data.items));
-            dispatch(toggleLoader(false));
-        });
+        const data = await usersAPI.getUsers(currentPage, pageSize);
+        dispatch(setCurrentPage(currentPage));
+        dispatch(setTotalUserCount(data.totalCount));
+        dispatch(setUsers(data.items));
+        dispatch(toggleLoader(false));
+
     }
 };
 
+// Выносим что бы не дублировать код в отдельный метод
+const followUnfollow = async (userId, dispatch, actionCreator, apiMethod) => {
+
+       dispatch(toggleFollowingProgress(true, userId));
+       const response = await apiMethod(userId);
+       if(response.data.resultCode === 0){
+           dispatch(actionCreator(userId));
+       }
+       dispatch(toggleFollowingProgress(false, userId));
+
+};
+
 export const unfollow = (userId) => { // кнопка отписаться
-    return (dispatch) => {
-        dispatch(toggleFollowingProgress(true, userId));
-        usersAPI.unfollow(userId)
-            .then(response => {
-                if(response.data.resultCode === 0){
-                    dispatch(unfollowSuccess(userId));
-                }
-                dispatch(toggleFollowingProgress(false, userId));
-            });
+    return async (dispatch) => {
+        followUnfollow(userId, dispatch, unfollowSuccess,usersAPI.unfollow );
     }
 };
 
 export const follow = (userId) => { // кнопка подписаться
-    return (dispatch) => {
-        dispatch(toggleFollowingProgress(true, userId));
-        usersAPI.follow(userId)
-            .then(response => {
-                if(response.data.resultCode === 0){
-                    dispatch(followSuccess(userId));
-                }
-                dispatch(toggleFollowingProgress(false, userId));
-            });
+    return async (dispatch) => {
+        followUnfollow(userId, dispatch, followSuccess, usersAPI.follow);
     }
 };
 
