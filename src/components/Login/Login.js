@@ -10,7 +10,7 @@ import style from './login.module.css';
 
 const maxLength = maxLengthCreator(20);
 
-const Login = ({login, isAuth}) => {
+const Login = ({login, isAuth, captchaUrl}) => {
 
   // Если залогинились делаем Redirect
   if(isAuth){
@@ -18,17 +18,17 @@ const Login = ({login, isAuth}) => {
   }
   // Функция которыя принимает данные с формы, после события onSubmit
   const onSubmitForm = (formData) => {
-    login(formData.email, formData.password, formData.rememberMe);
+    login(formData.email, formData.password, formData.rememberMe, formData.captcha);
   };
     return (
       <div>
           <h1>Login</h1>
-          <LoginReduxForm onSubmit={onSubmitForm} />
+          <LoginReduxForm onSubmit={onSubmitForm} captchaUrl={captchaUrl} />
       </div>
     );
 };
 
-const LoginForm = ({handleSubmit, error}) => {
+const LoginForm = ({handleSubmit, captchaUrl, error}) => {
     return(
       <form onSubmit={handleSubmit}>
           <div>
@@ -40,6 +40,16 @@ const LoginForm = ({handleSubmit, error}) => {
           <div>
             <Field component={Input} type={"checkbox"} name={"rememberMe"} /> remember me
           </div>
+          <div>
+            {
+              captchaUrl ? <img src={captchaUrl} alt='captcha'/> : null
+            }
+          </div>
+        <div>
+          {
+            captchaUrl ? <Field component={Input} type={"text"} name={"captcha"} /> : null
+          }
+        </div>
 
             {error ? <div className={style.formError}>
                       {error}
@@ -59,7 +69,8 @@ const LoginReduxForm = reduxForm({
 })(LoginForm);
 
 const mapStateToProps = (state) => ({
-  isAuth: state.auth.isAuth
+  isAuth: state.auth.isAuth,
+  captchaUrl: state.auth.captchaUrl
 });
 
 export default connect(mapStateToProps, {login, logout})(Login);

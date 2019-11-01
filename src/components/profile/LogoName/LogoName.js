@@ -1,16 +1,32 @@
-import React from 'react'
+import React, {useState} from 'react'
 import s from "../profile.module.css";
 import avatar from '../../../assets/images/avatar.jpeg'
 import Preloader from "../../elements/Preloader/Preloader";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
+import ProfileData from "./ProfileData/ProfileData";
+import ProfileEditForm from "./ProfileData/ProfileEditForm";
 
 
-const LogoName = ({profile, status, updateStatus}) => {
+const LogoName = ({profile, status, updateStatus, isOwner, saveAvatar, saveProfile}) => {
 
+    const[editMode, setEditMode] = useState(false);
 
     if(!profile){
         return <Preloader/>
     }
+
+    const onAvatarLoad = (event) =>{
+        if(event.target.files.length){
+            saveAvatar(event.target.files[0])
+        }
+
+    };
+    const onSubmitForm = (formData) => {
+        saveProfile(formData)
+          .then(() => {
+              setEditMode(false)
+          });
+    };
 
     return(
         <div>
@@ -22,19 +38,20 @@ const LogoName = ({profile, status, updateStatus}) => {
                     <ProfileStatusWithHooks status={status} updateStatus={updateStatus} />
                 </div>
             </div>
-
-            <div className={s.social}>
-                <ul>
-                    <li><a href={profile.contacts.facebook}>facebook</a></li>
-                    <li><a href={profile.contacts.vk}>VK</a></li>
-                    <li><a href={profile.contacts.twitter}>twitter</a></li>
-                    <li><a href={profile.contacts.instagram}>instagram</a></li>
-                    <li><a href={profile.contacts.website}>website</a></li>
-                </ul>
+            <div>
+                {isOwner ? <input type='file' onChange={onAvatarLoad}/> : null}
             </div>
+            {
+                editMode ? <ProfileEditForm initialValues={profile} onSubmit={onSubmitForm} profile={profile}/>
+                        : <ProfileData profile={profile} isOwner={isOwner} goToEdit={() => setEditMode(true)} />
+            }
         </div>
-
     )
 };
+
+
+
+
+
 
 export default LogoName;
